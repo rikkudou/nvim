@@ -1,9 +1,28 @@
+local nvimPath = "C:/Program Files/Neovim/"
+
+function SaveAndExit()
+    -- wirte all buffers first
+    vim.api.nvim_command(":wa")
+    -- quit all buffers
+    vim.api.nvim_command(":qa")
+end
+
 vim.cmd('highlight Normal guibg=#272727')
-if vim.fn.exists(':NeoraySet') > 0 then
+
+if vim.fn.exists(':NeoraySet') > 0 
+then
   vim.cmd('NeoraySet Transparency 0.85')
   vim.cmd('NeoraySet WindowState maximized')
+  vim.opt.guifont="JetBrainsMono:h13"
+else
+  vim.opt.guifont="JetBrainsMono NFM:h13"
 end
-vim.opt.guifont="JetBrainsMono NFM:h14"
+
+if vim.fn.has "win32" == 1 
+then
+  vim.g.undotree_DiffCommand = nvimPath .. '/bin/diff.exe'
+end
+
 vim.opt.termguicolors=true
 vim.g.mapleader = " "
 vim.opt.number = true
@@ -57,6 +76,13 @@ vim.keymap.set('n', '<C-PageDown>', vim.cmd.BufferNext)
 vim.keymap.set('n', '<C-PageUp>', vim.cmd.BufferPrevious)
 vim.keymap.set('n', '<C-S-PageDown>', vim.cmd.BufferMoveNext)
 vim.keymap.set('n', '<C-S-PageUp>', vim.cmd.BufferMovePrevious)
+vim.keymap.set('n', '<leader>bk', vim.cmd.BufferClose)
+vim.keymap.set('n', '<leader>bh', vim.cmd.BufferRestore)
+vim.keymap.set('n', '<leader>bp', vim.cmd.BufferPin)
 
 vim.keymap.set('', '<leader>gt', ":TermSelect<CR>")
 vim.keymap.set({'n', 't'}, '<C-\\>', "<cmd>ToggleTerm direction=float<CR>")
+vim.keymap.set({'n', 't'}, '<leader>T', ":TermNew direction=float name=")
+
+vim.keymap.set({'n', 'v'}, 'ZZ', function() SaveAndExit() end)
+vim.keymap.set({'n', 'v'}, 'gh', vim.lsp.buf.hover)
