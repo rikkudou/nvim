@@ -15,6 +15,7 @@ return{
     -- Allows extra capabilities provided by blink.cmp
     'saghen/blink.cmp',
   },
+  
   config = function()
    vim.diagnostic.config {
       severity_sort = true,

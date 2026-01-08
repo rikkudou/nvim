@@ -1,4 +1,2 @@
-local config = "Rikkudou"
---local config = "Test"
-require(config .. ".config.lazy")
-require(config .. ".main.remap")
+require("config.lazy")
+require("main.remap")

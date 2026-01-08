@@ -38,21 +38,11 @@ return{
 
             ["lua_ls"] = function()
                 require("lspconfig").lua_ls.setup(
-                    coq.lsp_ensure_capabilities({
-                        settings = {
-                          lua_ls = {
-                            workspace = {
-                              checkThirdParty = false,
-                              library = {
-                                vim.env.VIMRUNTIME .. "/lua"
-                              }
-                            }
-                          }
-                        }
-                    })
+                    coq.lsp_ensure_capabilities({})
                 )
             end,
         },
     })
   end,
+  enabled = false,
 }

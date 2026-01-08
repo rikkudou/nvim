@@ -1,9 +1,5 @@
-local nvimPath = "C:/Program Files/Neovim/"
-
 function SaveAndExit()
-    -- wirte all buffers first
     vim.api.nvim_command(":wa")
-    -- quit all buffers
     vim.api.nvim_command(":qa")
 end
 
@@ -20,14 +16,19 @@ end
 
 if vim.fn.has "win32" == 1 
 then
-  vim.g.undotree_DiffCommand = nvimPath .. '/bin/diff.exe'
+  vim.g.undotree_DiffCommand = "C:/Program Files/Git/usr/bin/diff.exe" --nvimPath .. '/bin/diff.exe'
 end
+
+vim.opt.undofile = true
+vim.opt.undodir = vim.fn.stdpath("data") .. '/undo'
+vim.opt.undolevels = 1000
+vim.opt.undoreload = 10000
 
 vim.opt.termguicolors=true
 vim.g.mapleader = " "
 vim.opt.number = true
 vim.opt.relativenumber = true
-vim.opt.signcolumn = "number"
+--vim.opt.signcolumn = "yes"
 
 vim.opt.tabstop = 2
 vim.opt.softtabstop = 2
@@ -46,9 +47,12 @@ vim.opt.errorbells = false
 vim.opt.pumheight = 8
 
 vim.opt.swapfile = false
+vim.opt.autoindent = true
 
 vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
 vim.keymap.set("i", "jk", "<Esc>")
+
+vim.api.nvim_set_hl(0, 'BufferLineFill', { bg = 'NONE' })
 
 vim.keymap.set({"n", "v"}, "H", "12h")
 vim.keymap.set({"n", "v"}, "J", "12j")
@@ -69,15 +73,15 @@ vim.keymap.set("n", ";", ":")
 vim.keymap.set("v", ";", "<C-[>:")
 vim.keymap.set({"n", "v"}, ":", ";")
 vim.keymap.set("n", "<leader>r", ":source $MYVIMRC<CR>")
-vim.keymap.set("n", "<leader>t", ":Neotree toggle<CR>")
+vim.keymap.set("n", "<leader>e", ":Neotree toggle<CR>")
 vim.keymap.set('n', 'gu', vim.cmd.UndotreeToggle)
 
 vim.keymap.set('n', '<C-PageDown>', vim.cmd.BufferNext)
 vim.keymap.set('n', '<C-PageUp>', vim.cmd.BufferPrevious)
 vim.keymap.set('n', '<C-S-PageDown>', vim.cmd.BufferMoveNext)
 vim.keymap.set('n', '<C-S-PageUp>', vim.cmd.BufferMovePrevious)
-vim.keymap.set('n', '<leader>bk', vim.cmd.BufferClose)
-vim.keymap.set('n', '<leader>bh', vim.cmd.BufferRestore)
+vim.keymap.set('n', '<leader>x', vim.cmd.BufferClose)
+vim.keymap.set('n', '<leader>X', vim.cmd.BufferRestore)
 vim.keymap.set('n', '<leader>bp', vim.cmd.BufferPin)
 
 vim.keymap.set('', '<leader>gt', ":TermSelect<CR>")
@@ -85,4 +89,20 @@ vim.keymap.set({'n', 't'}, '<C-\\>', "<cmd>ToggleTerm direction=float<CR>")
 vim.keymap.set({'n', 't'}, '<leader>T', ":TermNew direction=float name=")
 
 vim.keymap.set({'n', 'v'}, 'ZZ', function() SaveAndExit() end)
-vim.keymap.set({'n', 'v'}, 'gh', vim.lsp.buf.hover)
+vim.keymap.set({'n', 'v'}, '<C-/>', "gc")
+-- vim.keymap.set({'n', 'v'}, 'gh', vim.lsp.buf.hover)
+-- vim.keymap.set({'n', 'v'}, 'gh', vim.diagnostic.open_float())
+function OpenDiagnosticIfNoFloat()
+    for _, winid in pairs(vim.api.nvim_tabpage_list_wins(0)) do
+        if vim.api.nvim_win_get_config(winid).zindex then
+            return
+        end
+    end
+    vim.diagnostic.open_float(0, {
+        scope = "cursor",
+        focusable = false,
+        close_events = {"CursorMoved", "CursorMovedI", "BufHidden", "InsertCharPre", "WinLeave"},
+    })
+end
+
+vim.api.nvim_set_keymap('n', 'gh', '<cmd>vim.diagnostic.open_float()<CR>', { noremap = true, silent = true })

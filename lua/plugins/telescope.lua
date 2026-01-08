@@ -9,6 +9,41 @@ return{
 		vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = 'Telescope live grep' })
 		vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'Telescope buffers' })
 		vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = 'Telescope help tags' })
+
+local builtin = require('telescope.builtin')
+local config = require('telescope.config')
+
+-- Return a list of files found in quickfix, skipping duplicates
+local quickfix_files = function()
+  local qflist = vim.fn.getqflist()
+  local files = {}
+  local seen = {}
+  for k in pairs(qflist) do
+    local path = vim.fn.bufname(qflist[k]["bufnr"])
+    if not seen[path] then
+      files[#files + 1] = path
+      seen[path] = true
+    end
+  end
+  table.sort(files)
+  return files
+end
+
+-- Invoke live_grep on all files in quickfix
+local grep_on_quickfix = function()
+  local args = {}
+
+  for i, v in ipairs(config.values.vimgrep_arguments) do
+    args[#args+1] = v
+  end
+  for i, v in ipairs(quickfix_files()) do
+    args[#args+1] = '-g/'..v
+  end
+
+  builtin.live_grep({vimgrep_arguments = args})
+end
+
+vim.keymap.set('n', '<leader>FG', grep_on_quickfix, {})
 	require('telescope').setup{
 	  defaults = {
 	    -- Default configuration for telescope goes here:
