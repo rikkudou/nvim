@@ -4,6 +4,13 @@ return{
 
   },
   config = function()
-    require("toggleterm").setup{}
+    vim.cmd [[let &shell = '"C:\Program Files\Git\bin\bash.exe"']]
+    vim.cmd [[let &shellcmdflag = '-s']]
+    
+    require("toggleterm").setup{
+      open_mapping = '<C-\\>',
+      start_in_insert = true,
+      direction = 'float',
+    }
   end,
 }

@@ -6,7 +6,7 @@ return {
   ---@module "auto-session"
   ---@type AutoSession.Config
   opts = {
-    close_filetypes_on_save = { "checkhealth", "undotree", "neo-tree" }, -- List of file types to close before saving
+    close_filetypes_on_save = { "checkhealth", "undotree", "neo-tree", "netrw" }, -- List of file types to close before saving
     close_unsupported_windows = true,
     auto_restore_last_session = true,
     auto_save = true,

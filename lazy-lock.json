@@ -1,9 +1,11 @@
 {
+  "FTerm.nvim": { "branch": "master", "commit": "d1320892cc2ebab472935242d9d992a2c9570180" },
   "auto-session": { "branch": "main", "commit": "292492ab7af4bd8b9e37e28508bc8ce995722fd5" },
   "barbar.nvim": { "branch": "master", "commit": "539d73def39c9172b4d4d769f14090e08f37b29d" },
   "blink.cmp": { "branch": "main", "commit": "10c164bbdf065f9781b6cc2f7d068c016276055b" },
   "coq_nvim": { "branch": "coq", "commit": "d8b71757358038fa151fb45c493c3a1e8c3629a3" },
-  "drex.nvim": { "branch": "main", "commit": "62140090e13552d0f960afb5647e943872f88309" },
+  "diffview.nvim": { "branch": "main", "commit": "4516612fe98ff56ae0415a259ff6361a89419b0a" },
+  "evergarden": { "branch": "main", "commit": "124f7d142ed328fe413888b10ae39d94ee695560" },
   "fidget.nvim": { "branch": "main", "commit": "64463022a1f2ff1318ab22a2ea4125ed9313a483" },
   "fzf-lua": { "branch": "main", "commit": "19d7020b700879759d7f834fc717dde086f673a7" },
   "lazy.nvim": { "branch": "main", "commit": "306a05526ada86a7b30af95c5cc81ffba93fef97" },
