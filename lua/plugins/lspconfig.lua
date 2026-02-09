@@ -15,9 +15,13 @@ return{
     -- Allows extra capabilities provided by blink.cmp
     'saghen/blink.cmp',
   },
-  
   config = function()
-   vim.diagnostic.config {
+    require("mason").setup()
+    require("mason-lspconfig").setup({
+        ensure_installed = { "pyright", "jdtls", "dockerls", "elixirls", "ts_ls" },
+        automatic_installation = true,
+    })
+    vim.diagnostic.config {
       severity_sort = true,
       float = { border = 'rounded', source = 'if_many' },
       underline = { severity = vim.diagnostic.severity.ERROR },
